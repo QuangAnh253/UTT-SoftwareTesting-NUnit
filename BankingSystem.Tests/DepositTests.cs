@@ -89,24 +89,5 @@ namespace BankSystem.Tests
         {
             Assert.Throws<ArgumentException>(() => _account.Deposit(amount));
         }
-
-        [Test]
-        public void Deposit_Buggy_ShouldRevealBug()
-        {
-            var acc = new BankAccountBuggy("ACC003", 1_000_000);
-
-            acc.Deposit(100_000);
-
-            // bug: cộng x2
-            Assert.That(acc.Balance, Is.EqualTo(1_100_000),
-                "Lỗi nếu không +100k");
-        }
-
-        [Test]
-        public void Deposit_Buggy_InvalidAmount_ShouldThrow()
-        {
-            var acc = new BankAccountBuggy("BUG", 1_000);
-            Assert.Throws<ArgumentException>(() => acc.Deposit(0));
-        }
     }
 }

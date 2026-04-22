@@ -99,35 +99,6 @@ namespace BankSystem.Tests
             Assert.That(_account.Balance, Is.EqualTo(expected));
         }
 
-
-        // test bug (cố tình fail)
-
-        [Test]
-        public void Withdraw_Buggy_ValidAmount_RevealBug()
-        {
-            var buggy = new BankAccountBuggy("BUGGY001", 1_000_000);
-            buggy.Withdraw(200_000);
-
-            Assert.That(buggy.Balance, Is.EqualTo(800_000),
-                $"[BUG] Withdraw đang trừ gấp đôi! Thực tế: {buggy.Balance}");
-        }
-
-        // amount <= 0 -> ArgumentException
-        [Test]
-        public void Withdraw_Buggy_InvalidAmount_ShouldThrow()
-        {
-            var buggy = new BankAccountBuggy("BUG", 1_000);
-            Assert.Throws<ArgumentException>(() => buggy.Withdraw(0));
-        }
-
-        // amount > Balance -> InvalidOperationException
-        [Test]
-        public void Withdraw_Buggy_ExceedsBalance_ShouldThrow()
-        {
-            var buggy = new BankAccountBuggy("BUG", 1_000);
-            Assert.Throws<InvalidOperationException>(() => buggy.Withdraw(2_000));
-        }
-
         // So sánh: phiên bản đúng phải PASS cùng kịch bản
         [Test]
         public void Withdraw_CorrectVersion_ForComparison()

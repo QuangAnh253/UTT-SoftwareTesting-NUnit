@@ -4,8 +4,7 @@
 Dự án được thực hiện trong khuôn khổ học phần **Kiểm thử phần mềm** tại **Trường Đại học Công nghệ GTVT (UTT)**. Mục tiêu cốt lõi là nghiên cứu và triển khai quy trình kiểm thử đơn vị (Unit Testing) chuyên sâu cho hệ thống quản lý giao dịch ngân hàng bằng framework **NUnit**.
 
 **Mục tiêu chính:**
-* Áp dụng NUnit để kiểm thử các nghiệp vụ tài chính: nạp tiền, rút tiền, chuyển khoản và tính lãi.
-* Thực hiện kỹ thuật **Bug Reveal Testing**: Sử dụng bộ test để phát hiện và minh chứng các lỗi logic trong phiên bản mã nguồn lỗi (`BankAccountBuggy`).
+* Áp dụng NUnit để kiểm thử các nghiệp vụ tài chính: nạp tiền, rút tiền, chuyển khoản và thanh toán hóa đơn.
 * Đánh giá chất lượng bộ kiểm thử thông qua các chỉ số bao phủ mã nguồn (Code Coverage).
 
 ---
@@ -23,9 +22,8 @@ Dự án gồm hai phần chính:
 
 * **BankSystem (Business Logic):**
   * `BankAccount.cs`: Triển khai các phương thức nghiệp vụ chuẩn.
-  * `BankAccountBuggy.cs`: Phiên bản chứa lỗi logic cố ý để mô phỏng phát hiện lỗi.
 * **BankingSystem.Tests (Test Suite):**
-  * `DepositTests.cs`, `WithdrawTests.cs`, `TransferTests.cs`, `InterestTests.cs`: Các lớp kiểm thử độc lập cho từng nghiệp vụ.
+  * `DepositTests.cs`, `WithdrawTests.cs`, `TransferTests.cs`, `PayBillTests.cs`: Các lớp kiểm thử độc lập cho từng nghiệp vụ.
 
 ---
 
@@ -34,7 +32,7 @@ Các test tuân thủ mô hình **Arrange - Act - Assert (AAA)**, bao gồm:
 
 * **Happy Path:** Giao dịch thông thường với dữ liệu hợp lệ.
 * **Negative Testing:** Kiểm tra xử lý ngoại lệ với dữ liệu không hợp lệ hoặc vi phạm ràng buộc số dư.
-* **Boundary Value Analysis:** Kiểm thử giá trị biên (ví dụ: rút đúng số dư, lãi suất tối thiểu).
+* **Boundary Value Analysis:** Kiểm thử giá trị biên (ví dụ: rút đúng số dư, thanh toán sát số dư trừ phí).
 * **Data-Driven Testing:** Sử dụng attribute `[TestCase]` để chạy cùng kịch bản với nhiều bộ dữ liệu.
 
 ---
@@ -47,7 +45,6 @@ Dựa trên công cụ phân tích ReportGenerator:
   * Branch Coverage: **100% (20/20 nhánh)**
 * **Chi tiết từng lớp:**
   * `BankSystem.BankAccount`: Line coverage 100%, Branch coverage 100%
-  * `BankSystem.BankAccountBuggy`: Line coverage 100%, Branch coverage 100%
 
 Kết quả này khẳng định bộ kiểm thử đã thực thi qua toàn bộ các dòng lệnh và mọi nhánh điều kiện logic có trong mã nguồn dự án.
 

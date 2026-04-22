@@ -85,31 +85,5 @@ namespace BankSystem.Tests
             Assert.That(_source.Balance, Is.EqualTo(expectedSource));
             Assert.That(_target.Balance, Is.EqualTo(expectedTarget));
         }
-
-        [Test]
-        public void Transfer_Buggy_WrongOrder_RevealBug()
-        {
-            var src = new BankAccountBuggy("SRC", 1_000_000);
-            var tgt = new BankAccountBuggy("TGT", 500_000);
-
-            double targetBefore = tgt.Balance;
-
-            try
-            {
-                src.Transfer(tgt, 9_999_999);
-            }
-            catch { }
-
-            // bug: cộng tiền trước khi trừ → nếu fail giữa chừng thì target vẫn bị cộng
-            Assert.That(tgt.Balance, Is.EqualTo(targetBefore),
-                "bug: Transfer cộng tiền vào target trước khi trừ nguồn");
-        }
-
-        [Test]
-        public void Transfer_Buggy_NullTarget_ShouldThrow()
-        {
-            var acc = new BankAccountBuggy("BUG", 1_000);
-            Assert.Throws<ArgumentNullException>(() => acc.Transfer(null, 100));
-        }
     }
 }

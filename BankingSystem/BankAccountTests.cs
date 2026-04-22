@@ -43,63 +43,16 @@
             target.Deposit(amount);
         }
 
-        public void ApplyInterest(double rate)
-        {
-            if (rate <= 0)
-                throw new ArgumentException();
-
-            // lãi kép
-            Balance += Balance * rate;
-        }
-    }
-    
-    // 4 lỗi cho 4 module
-    public class BankAccountBuggy
-    {
-        public string AccountId { get; private set; }
-        public double Balance { get; private set; }
-
-        public BankAccountBuggy(string accountId, double initialBalance)
-        {
-            AccountId = accountId;
-            Balance = initialBalance;
-        }
-
-        public void Deposit(double amount)
+        public void PayBill(double amount)
         {
             if (amount <= 0)
                 throw new ArgumentException();
 
-            Balance += amount * 2; // đúng: Balance += amount;
-        }
-
-        public void Withdraw(double amount)
-        {
-            if (amount <= 0)
-                throw new ArgumentException();
-
-            if (amount > Balance)
+            double fee = 2000; // phí cố định
+            if (amount + fee > Balance)
                 throw new InvalidOperationException();
 
-            Balance -= amount * 2; // đúng: Balance -= amount;
-        }
-
-        public void Transfer(BankAccountBuggy target, double amount)
-        {
-            if (target == null)
-                throw new ArgumentNullException();
-
-            // bug: cộng trước rồi mới trừ
-            target.Deposit(amount);
-            Withdraw(amount);
-        }
-
-        public void ApplyInterest(double rate)
-        {
-            if (rate <= 0)
-                throw new ArgumentException();
-
-            Balance += rate; // đúng: Balance += Balance * rate;
+            Balance -= (amount + fee);
         }
     }
 }
